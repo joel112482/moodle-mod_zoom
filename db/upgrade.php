@@ -351,6 +351,57 @@ function xmldb_zoom_upgrade($oldversion) {
         // Zoom savepoint reached.
         upgrade_mod_savepoint(true, 2020042700, 'zoom');
     }
+    // TODO: update the database to have the new fields that correspond to the new settings
+    if ($oldversion < 0) {
+        // Change field zoom_meeting_participants from type int(11) to char(35),
+        // because sometimes zoomuserid is concatenated with a timestamp.
+        // See https://devforum.zoom.us/t/meeting-participant-user-id-value/7886/2.
+
+        $table = new xmldb_table('zoom');
+
+        // Define field option_waiting_room to be added to zoom.
+        $field = new xmldb_field('option_waiting_room', XMLDB_TYPE_INTEGER, '1', null, null, null, '1', 'alternative_hosts');
+
+        // Conditionally launch add field option_waiting_room.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field option_auth_users to be added to zoom.
+        $field = new xmldb_field('option_auth_users', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'option_waiting_room');
+
+        // Conditionally launch add field option_auth_users.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field option_mute_on_entry to be added to zoom.
+        $field = new xmldb_field('option_mute_on_entry', XMLDB_TYPE_INTEGER, '1', null, null, null, '1', 'option_auth_users');
+
+        // Conditionally launch add field option_mute_on_entry.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Define field option_host_video to be added to zoom.
+        $field = new xmldb_field('option_host_video', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'option_start_type');
+
+        // Conditionally launch add field option_host_video.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->change_field_default($table, $field);
+        }
+
+        // Define field option_participants_video to be added to zoom.
+        $field = new xmldb_field('option_participants_video', XMLDB_TYPE_INTEGER, '1', null, null, null, '0', 'option_host_video');
+
+        // Conditionally launch add field option_participants_video.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->change_field_default($table, $field);
+        }
+
+        // Zoom savepoint reached.
+        upgrade_mod_savepoint(true, 2020050400, 'zoom');
+    }
 
     return true;
 }
