@@ -84,6 +84,8 @@ $strstartvideopart = get_string('startpartjoins', 'mod_zoom');
 $straudioopt = get_string('option_audio', 'mod_zoom');
 $strstatus = get_string('status', 'mod_zoom');
 $strall = get_string('allmeetings', 'mod_zoom');
+$strwwaitingroom = get_string('waitingroom', 'mod_zoom');
+$strmuteuponentry = get_string('option_mute_on_entry', 'mod_zoom');
 
 // Output starts here.
 echo $OUTPUT->header();
@@ -178,8 +180,11 @@ if ($userishost) {
 }
 
 if (!$zoom->webinar) {
-    $strjbh = ($zoom->option_jbh) ? $stryes : $strno;
+    $strjbh = isset($zoom->option_jbh) ? $stryes : $strno;
     $table->data[] = array($strjoinbeforehost, $strjbh);
+
+    $strwr = isset($zoom->option_waiting_room) ? $stryes : $strno;
+    $table->data[] = array($strwwaitingroom, $strwr);
 
     $strvideohost = ($zoom->option_host_video) ? $stryes : $strno;
     $table->data[] = array($strstartvideohost, $strvideohost);
@@ -189,6 +194,7 @@ if (!$zoom->webinar) {
 }
 
 $table->data[] = array($straudioopt, get_string('audio_' . $zoom->option_audio, 'mod_zoom'));
+$table->data[] = array($strmuteuponentry, ($zoom->option_mute_on_entry) ? $stryes : $strno);
 
 if (!$zoom->recurring) {
     if (!$zoom->exists_on_zoom) {

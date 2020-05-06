@@ -49,6 +49,9 @@ define('ZOOM_MAX_RECORDS_PER_CALL', 300);
 define('ZOOM_USER_TYPE_BASIC', 1);
 define('ZOOM_USER_TYPE_PRO', 2);
 define('ZOOM_USER_TYPE_CORP', 3);
+// Meeting options
+define('ZOOM_JBH', 'joinbeforehost');
+define('ZOOM_WR', 'waitingroom');
 
 /**
  * Entry not found on Zoom.

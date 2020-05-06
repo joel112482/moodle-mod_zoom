@@ -352,7 +352,7 @@ function xmldb_zoom_upgrade($oldversion) {
         upgrade_mod_savepoint(true, 2020042700, 'zoom');
     }
     // TODO: update the database to have the new fields that correspond to the new settings
-    if ($oldversion < 0) {
+    if ($oldversion < 2020050600) {
         // Change field zoom_meeting_participants from type int(11) to char(35),
         // because sometimes zoomuserid is concatenated with a timestamp.
         // See https://devforum.zoom.us/t/meeting-participant-user-id-value/7886/2.
@@ -400,7 +400,7 @@ function xmldb_zoom_upgrade($oldversion) {
         }
 
         // Zoom savepoint reached.
-        upgrade_mod_savepoint(true, 2020050400, 'zoom');
+        upgrade_mod_savepoint(true, 2020050600, 'zoom');
     }
 
     return true;

@@ -137,6 +137,7 @@ $string['topic'] = 'Topic';
 $string['unavailable'] = 'Unable to join at this time';
 $string['updatemeetings'] = 'Update meeting settings from Zoom';
 $string['usepersonalmeeting'] = 'Use personal meeting ID {$a}';
+$string['waitingroom'] = 'Waiting room enabled';
 $string['webinar'] = 'Webinar';
 $string['webinar_help'] = 'This option is only available to pre-authorized Zoom accounts.';
 $string['webinar_already_true'] = '<p><b>This module was already set as a webinar, not meeting. You cannot toggle this setting after creating the webinar.</b></p>';

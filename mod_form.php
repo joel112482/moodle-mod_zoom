@@ -177,9 +177,17 @@ class mod_zoom_mod_form extends moodleform_mod {
         // so the options aren't nested in a 'meetingoptions' array.
         $mform->addGroup(array(
             // Join before host.
-            $mform->createElement('radio', 'option_jbh', '', get_string('option_jbh', 'zoom')),
-            $mform->createElement('radio', 'option_waiting_room', '', get_string('option_waiting_room', 'mod_zoom'))
+            $mform->createElement('radio', 'option_jbh', '', get_string('option_jbh', 'zoom'), ZOOM_JBH),
+            $mform->createElement('radio', 'option_waiting_room', '', get_string('option_waiting_room', 'mod_zoom'), ZOOM_WR)
         ), 'meetingoptions', get_string('meetingoptions', 'zoom'), null, false);
+        if (isset($this->current->option_jbh) && strval($this->current->option_jbh) === "1") {
+            $this->current->option_jbh = ZOOM_JBH;
+        }
+        
+        if (isset($this->current->option_waiting_room) && strval($this->current->option_waiting_room) === "1") {
+            $this->current->option_waiting_room = ZOOM_WR;
+        }
+
         $mform->setDefault('option_jbh', $config->defaultjoinbeforehost);
         $mform->setDefault('option_waiting_room', $config->defaultwaitingroomoption);
         $mform->addHelpButton('meetingoptions', 'meetingoptions', 'zoom');
